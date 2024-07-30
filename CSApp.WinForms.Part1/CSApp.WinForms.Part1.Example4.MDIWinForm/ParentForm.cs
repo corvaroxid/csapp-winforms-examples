@@ -17,6 +17,7 @@ namespace CSApp.WinForms.Part1.Example4.MDIWinForm
         public ParentForm()
         {
             InitializeComponent();
+            spDateText.Text = Convert.ToString(System.DateTime.Today.ToLongDateString());
         }
 
         private void ExitFileMenuItemClick(object sender, EventArgs e)
@@ -40,6 +41,27 @@ namespace CSApp.WinForms.Part1.Example4.MDIWinForm
             newChild.Text = newChild.Text + " " + ++openDocuments;
             newChild.MdiParent = this;
             newChild.Show();
+        }
+
+        private void ToolsPanelItemClicked(object sender, ToolStripItemClickedEventArgs eventArgs)
+        {
+            switch (eventArgs.ClickedItem.Tag.ToString())
+            {
+                case "NewDoc":
+                    ChildForm newChild = new ChildForm();
+                    newChild.MdiParent = this;
+                    newChild.Show();
+                    newChild.Text = newChild.Text + " " + ++openDocuments;
+                    break;
+                case "Cascade":
+                    this.LayoutMdi(System.Windows.Forms.MdiLayout.Cascade);
+                    spStatusText.Text = "Windows is cascade";
+                    break;
+                case "Title":
+                    this.LayoutMdi(System.Windows.Forms.MdiLayout.TileHorizontal);
+                    spStatusText.Text = "Windows is horizontal";
+                    break;
+            }
         }
     }
 }
